@@ -56,4 +56,38 @@ public class CarController {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @PutMapping("/cars/{id}")
+    public ResponseEntity<Car> updateCar(@PathVariable("id") long id, @RequestBody Car car) {
+        Optional<Car> carData = carRepository.findById(id);
+        if (carData.isPresent()) {
+            Car newCar = carData.get();
+            newCar.setManufacturer(car.getManufacturer());
+            newCar.setModel(car.getModel());
+            newCar.setYear(car.getYear());
+            return new ResponseEntity<>(carRepository.save(newCar), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @DeleteMapping("/cars/{id}")
+    public ResponseEntity<Car> deleteCar(@PathVariable("id") long id) {
+        try {
+            carRepository.deleteById(id);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @DeleteMapping("/cars/")
+    public ResponseEntity<Car> deleteAllCars() {
+        try {
+            carRepository.deleteAll();
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }
