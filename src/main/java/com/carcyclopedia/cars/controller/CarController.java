@@ -46,4 +46,14 @@ public class CarController {
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
     }
+
+    @PostMapping("/cars")
+    public ResponseEntity<Car> createCar(@RequestBody Car car) {
+        try {
+            Car newCar = carRepository.save(new Car(car.getManufacturer(), car.getModel(), car.getYear()));
+            return new ResponseEntity<>(newCar, HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }

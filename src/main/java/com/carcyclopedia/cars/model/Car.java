@@ -19,7 +19,7 @@ public class Car {
     @Column(name = "year")
     private int year;
 
-    public Car(){
+    public Car(String manufacturer, String model, int year){
 
     }
 
