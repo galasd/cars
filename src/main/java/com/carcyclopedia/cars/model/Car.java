@@ -5,7 +5,6 @@ import javax.persistence.*;
 @Entity
 @Table(name = "cars")
 public class Car {
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
@@ -19,35 +18,39 @@ public class Car {
     @Column(name = "year")
     private int year;
 
-    public Car(String manufacturer, String model, int year){
+    public Car() {
 
     }
 
-    public long getId(){
+    public Car(String manufacturer, String model, int year) {
+
+    }
+
+    public long getId() {
         return id;
     }
 
-    public String getManufacturer(){
+    public String getManufacturer() {
         return manufacturer;
     }
 
-    public void setManufacturer(String manufacturer){
+    public void setManufacturer(String manufacturer) {
         this.manufacturer = manufacturer;
     }
 
-    public String getModel(){
+    public String getModel() {
         return model;
     }
 
-    public void setModel(String model){
+    public void setModel(String model) {
         this.model = model;
     }
 
-    public int getYear(){
+    public int getYear() {
         return year;
     }
 
-    public void setYear(int year){
+    public void setYear(int year) {
         this.year = year;
     }
 
