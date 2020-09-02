@@ -1,5 +1,6 @@
 package com.carcyclopedia.cars.controller;
 
+import com.carcyclopedia.cars.exception.ResourceNotFoundException;
 import com.carcyclopedia.cars.model.Car;
 import com.carcyclopedia.cars.repository.CarRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +11,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api")
@@ -49,12 +52,8 @@ public class CarController {
 
     @GetMapping("/cars/{id}")
     public ResponseEntity<Car> getCarById(@PathVariable("id") long id) {
-        Optional<Car> carData = carRepository.findById(id);
-        if (carData.isPresent()) {
-            return new ResponseEntity<>(carData.get(), HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
-        }
+        Car carData = carRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("No car found with id = " + id));
+        return new ResponseEntity<>(carData, HttpStatus.OK);
     }
 
     @PostMapping("/cars")
@@ -69,16 +68,12 @@ public class CarController {
 
     @PutMapping("/cars/{id}")
     public ResponseEntity<Car> updateCar(@PathVariable("id") long id, @RequestBody Car car) {
-        Optional<Car> carData = carRepository.findById(id);
-        if (carData.isPresent()) {
-            Car newCar = carData.get();
-            newCar.setManufacturer(car.getManufacturer());
-            newCar.setModel(car.getModel());
-            newCar.setYear(car.getYear());
-            return new ResponseEntity<>(carRepository.save(newCar), HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
-        }
+        Car carData = carRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("No car found with id = " + id));
+        carData.setManufacturer(car.getManufacturer());
+        carData.setModel(car.getModel());
+        carData.setYear(car.getYear());
+        return new ResponseEntity<>(carRepository.save(carData), HttpStatus.OK);
+
     }
 
     @DeleteMapping("/cars/{id}")
