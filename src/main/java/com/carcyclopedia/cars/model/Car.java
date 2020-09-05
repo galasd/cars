@@ -2,6 +2,7 @@ package com.carcyclopedia.cars.model;
 
 import javax.persistence.*;
 
+// Entity class for cars table
 @Entity
 @Table(name = "cars")
 public class Car {
