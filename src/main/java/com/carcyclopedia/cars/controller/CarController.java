@@ -7,10 +7,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Order;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,11 +25,35 @@ public class CarController {
     @Autowired
     CarRepository carRepository;
 
+    private Sort.Direction getSortDirection(String direction) {
+        if (direction.equals("asc")) {
+            return Sort.Direction.ASC;
+        } else if (direction.equals("desc")) {
+            return Sort.Direction.DESC;
+        }
+        return Sort.Direction.ASC;
+    }
+
     @GetMapping("/cars")
     public ResponseEntity<Map<String, Object>> getAllCars(@RequestParam(required = false) String manufacturer,
                                                           @RequestParam(defaultValue = "0") int page,
-                                                          @RequestParam(defaultValue = "3") int size) {
+                                                          @RequestParam(defaultValue = "3") int size,
+                                                          @RequestParam(defaultValue = "id, desc") String[] sort) {
         try {
+            List<Sort.Order> orders = new ArrayList<>();
+            if(sort[0].contains(",")) {
+                // will sort more than 2 fields
+                // sortOrder="field, direction"
+                for (String sortOrder : sort) {
+                    String[] newSort = sortOrder.split(",");
+                    orders.add(new Order(getSortDirection(newSort[1]), newSort[0]));
+                }
+            }
+            else {
+                // sort=[field, direction]
+                orders.add(new Order(getSortDirection(sort[1]), sort[0]));
+            }
+
             List<Car> cars;
             Pageable paging = PageRequest.of(page, size);
             Page<Car> pageCars;
