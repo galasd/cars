@@ -55,12 +55,12 @@ public class CarController {
             }
 
             List<Car> cars;
-            Pageable paging = PageRequest.of(page, size);
+            Pageable pagingSort = PageRequest.of(page, size, Sort.by(orders));
             Page<Car> pageCars;
             if (manufacturer == null) {
-                pageCars = carRepository.findAll(paging);
+                pageCars = carRepository.findAll(pagingSort);
             } else {
-                pageCars = carRepository.findByManufacturer(manufacturer, paging);
+                pageCars = carRepository.findByManufacturer(manufacturer, pagingSort);
             }
             cars = pageCars.getContent();
             if (cars.isEmpty()) {
