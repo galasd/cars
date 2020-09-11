@@ -21,7 +21,7 @@ public class CarsViewAspect {
             " || within(@org.springframework.stereotype.Service *)" +
             " || within(@org.springframework.web.bind.annotation.RestController *)")
     public void springBeanPointcut() {
-        // Method is empty as this is just a Pointcut, the implementations are in the advices.
+        // Method is empty as this is just a Pointcut, the implementations are in the advices
     }
 
     @AfterThrowing(pointcut = "springBeanPointcut()", throwing = "e")
@@ -29,5 +29,4 @@ public class CarsViewAspect {
        log.error("Exception in {}.{}() with cause = {}.", joinPoint.getSignature().getDeclaringTypeName(),
                joinPoint.getSignature().getName(), e.getCause() != null ? e.getCause() : "NULL");
     }
-
 }
