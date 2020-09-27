@@ -7,7 +7,7 @@ import javax.persistence.*;
 @Table(name = "cars")
 public class Car {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @Column(name = "manufacturer")
@@ -25,6 +25,10 @@ public class Car {
 
     public Car(String manufacturer, String model, int year) {
 
+    }
+
+    public Car(String manufacturer) {
+        this.manufacturer = manufacturer;
     }
 
     public long getId() {
