@@ -1,6 +1,6 @@
 package com.carcyclopedia.cars;
 
-import com.carcyclopedia.cars.model.Car;
+import com.carcyclopedia.cars.models.Car;
 import com.carcyclopedia.cars.repository.CarRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;

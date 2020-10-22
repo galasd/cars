@@ -1,4 +1,4 @@
-package com.carcyclopedia.cars.model;
+package com.carcyclopedia.cars.models;
 
 import javax.persistence.*;
 

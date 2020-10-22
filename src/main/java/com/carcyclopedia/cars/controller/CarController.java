@@ -1,7 +1,7 @@
 package com.carcyclopedia.cars.controller;
 
 import com.carcyclopedia.cars.exception.ResourceNotFoundException;
-import com.carcyclopedia.cars.model.Car;
+import com.carcyclopedia.cars.models.Car;
 import com.carcyclopedia.cars.repository.CarRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
